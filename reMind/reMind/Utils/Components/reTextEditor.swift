@@ -10,7 +10,8 @@ import SwiftUI
 struct reTextEditor: View {
     @State var title: String
     @Binding var text: String
-    @State var maxSize: Int = 250
+    @State var maxSize: Int = 150
+    @State var currentSize: Int = 0
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,13 +25,16 @@ struct reTextEditor: View {
                     .onChange(of: text) { newValue in
                         if text.count > maxSize {
                             self.text = String(text.prefix(maxSize))
+                            currentSize = maxSize
+                        } else {
+                            currentSize = text.count
                         }
                     }
 
                 Divider()
                     .background(Palette.label.render.opacity(0.6))
 
-                Text("\(maxSize)")
+                Text("\(maxSize - currentSize)")
                     .font(.callout)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .trailing)
