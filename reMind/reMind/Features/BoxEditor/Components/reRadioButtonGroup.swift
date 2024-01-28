@@ -32,6 +32,7 @@ struct reRadioButtonGroup: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 8)
     }
 }
 

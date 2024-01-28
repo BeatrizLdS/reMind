@@ -39,6 +39,8 @@
 		FEE2DC752A4B6172006A535D /* reBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DC742A4B6172006A535D /* reBackground.swift */; };
 		FEE2DC782A4B70FA006A535D /* BoxCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DC772A4B70FA006A535D /* BoxCardView.swift */; };
 		FEEFCBBD2A65DAA400A61FE9 /* BoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEFCBBC2A65DAA400A61FE9 /* BoxViewModel.swift */; };
+		FF4982772B66DBE100134BE5 /* BoxEditorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4982762B66DBE100134BE5 /* BoxEditorModel.swift */; };
+		FF4982792B66DC5400134BE5 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4982782B66DC5400134BE5 /* UIApplication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		FEE2DC742A4B6172006A535D /* reBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reBackground.swift; sourceTree = "<group>"; };
 		FEE2DC772A4B70FA006A535D /* BoxCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxCardView.swift; sourceTree = "<group>"; };
 		FEEFCBBC2A65DAA400A61FE9 /* BoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxViewModel.swift; sourceTree = "<group>"; };
+		FF4982762B66DBE100134BE5 /* BoxEditorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoxEditorModel.swift; path = Components/BoxEditorModel.swift; sourceTree = "<group>"; };
+		FF4982782B66DC5400134BE5 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +225,7 @@
 			children = (
 				FE3ABEE52A5354AF00432ED4 /* reTheme.swift */,
 				FE6F11B02A605A4C003511F3 /* NSObject.swift */,
+				FF4982782B66DC5400134BE5 /* UIApplication.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 			children = (
 				FE3ABECB2A4F5E7F00432ED4 /* Components */,
 				FEDE8E082A4DFFE100EEF7EA /* BoxEditorView.swift */,
+				FF4982762B66DBE100134BE5 /* BoxEditorModel.swift */,
 			);
 			path = BoxEditor;
 			sourceTree = "<group>";
@@ -389,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF4982792B66DC5400134BE5 /* UIApplication.swift in Sources */,
 				FEEFCBBD2A65DAA400A61FE9 /* BoxViewModel.swift in Sources */,
 				FEDE8E052A4DFADE00EEF7EA /* reTextField.swift in Sources */,
 				FE3ABEE92A53563F00432ED4 /* SwipperLabel.swift in Sources */,
@@ -414,6 +421,7 @@
 				FE3ABEDF2A53522A00432ED4 /* SwipperView.swift in Sources */,
 				FE6F11B12A605A4C003511F3 /* NSObject.swift in Sources */,
 				FE6F11AD2A6059FD003511F3 /* CoreDataStack.swift in Sources */,
+				FF4982772B66DBE100134BE5 /* BoxEditorModel.swift in Sources */,
 				FE6F11B32A605A69003511F3 /* ActiveRecord.swift in Sources */,
 				FE3ABEE62A5354AF00432ED4 /* reTheme.swift in Sources */,
 				FE6A9F9A2A461E2400A84FC9 /* reMindApp.swift in Sources */,

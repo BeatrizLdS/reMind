@@ -39,7 +39,9 @@ struct reTextEditor: View {
             .frame(height: 200)
             .background(Palette.background.render)
             .cornerRadius(10)
+            .shadow(color: .black.opacity(0.25) ,radius: 5)
         }
+        .padding(.horizontal, 8)
     }
 }
 

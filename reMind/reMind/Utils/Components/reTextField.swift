@@ -32,6 +32,7 @@ struct reTextField: View {
             }
         }
         .foregroundColor(Palette.label.render)
+        .padding(.horizontal, 8)
     }
 }
 

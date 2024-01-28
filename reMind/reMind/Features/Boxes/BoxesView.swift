@@ -45,10 +45,13 @@ struct BoxesView: View {
             }
         }
         .sheet(isPresented: $isCreatingNewBox) {
-            BoxEditorView(name: "",
-                          keywords: "",
-                          description: "",
-                          theme: 0)
+            BoxEditorView(
+                isPresented: $isCreatingNewBox,
+                editorType: .createNewBox
+            )
+            .onDisappear {
+                viewModel.fetchBoxes()
+            }
         }
     }
 }

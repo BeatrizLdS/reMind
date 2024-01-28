@@ -10,9 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Box)
-public final class Box: NSManagedObject {
-
-}
+public final class Box: NSManagedObject { }
 
 extension Box {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Box> {
@@ -22,6 +20,8 @@ extension Box {
     @NSManaged public var identifier: UUID?
     @NSManaged public var name: String?
     @NSManaged public var rawTheme: Int16
+    @NSManaged public var descriptions: String?
+    @NSManaged public var keywords: String?
     @NSManaged public var terms: NSSet?
 
 }
@@ -56,9 +56,9 @@ extension Box: CoreDataModel {
 }
 
 enum reTheme: Int {
-    case aquamarine = 0
-    case mauve
-    case lavender
+    case aquamarine = 2
+    case mauve = 0
+    case lavender = 1
 
     var name: String {
         switch self {

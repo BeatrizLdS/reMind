@@ -14,6 +14,6 @@ struct reTextFieldStyle: TextFieldStyle {
             .padding(.horizontal, 8)
             .background(Palette.background.render)
             .cornerRadius(10)
-            .shadow(color: .black.opacity(0.25) ,radius: 10)
+            .shadow(color: .black.opacity(0.25) ,radius: 5)
     }
 }
