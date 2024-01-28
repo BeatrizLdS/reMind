@@ -13,6 +13,10 @@ class BoxViewModel: ObservableObject {
     init() {
         self.boxes = Box.all()
     }
+    
+    func fetchBoxes() {
+        self.boxes = Box.all()
+    }
 
     func getNumberOfPendingTerms(of box: Box) -> String {
         let term = box.terms as? Set<Term> ?? []

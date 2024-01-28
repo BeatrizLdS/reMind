@@ -7,54 +7,82 @@
 
 import SwiftUI
 
-struct BoxEditorView: View {
-    @State var name: String
-    @State var keywords: String
-    @State var description: String
-    @State var theme: Int
-
+struct BoxEditorView: View {    
+    @ObservedObject var viewModel: BoxEditorModel = BoxEditorModel()
+    @Binding var isPresented: Bool
+    
+    @FocusState var focusField: BoxEditorModel.FocusedField?
+    let editorType: BoxEditorType
+    
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
-                reTextField(title: "Name", text: $name)
-                reTextField(title: "Keywords",
-                            caption: "Separated by , (comma)",
-                            text: $keywords)
-                
-                reTextEditor(title: "Description",
-                             text: $description)
-
-                reRadioButtonGroup(title: "Theme",
-                                   currentSelection: $theme)
-                Spacer()
+            ScrollView(.vertical) {
+                VStack(spacing: 20) {
+                    reTextField(title: "Name",
+                                text: $viewModel.name)
+                    .focused($focusField, equals: .name)
+                    .onSubmit {
+                        focusField = .keywords
+                    }
+                    
+                    reTextField(title: "Keywords",
+                                caption: "Separated by , (comma)",
+                                text: $viewModel.keywords)
+                    .focused($focusField, equals: .keywords)
+                    .onSubmit {
+                        focusField = .description
+                    }
+                    
+                    reTextEditor(title: "Description",
+                                 text: $viewModel.description)
+                    .focused($focusField, equals: .description)
+                    
+                    
+                    reRadioButtonGroup(title: "Theme",
+                                       currentSelection: $viewModel.theme)
+                    Spacer()
+                }
             }
-            .padding()
+            .padding(10)
+            .alert(isPresented: $viewModel.alertError.showAlert) {
+                Alert(title: Text("Error!"), message: Text(viewModel.alertError.errorMessage))
+            }
+            .onAppear {
+                focusField = .name
+            }
             .background(reBackground())
-            .navigationTitle("New Box")
+            .navigationTitle(editorType.rawValue)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        print("Cancel")
+                        isPresented = false
                     }
                 }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        print("Cancel")
+                        let wasCreated = viewModel.createNewBox()
+                        isPresented = false
                     }
                     .fontWeight(.bold)
                 }
             }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
+            }
         }
+    }
+    
+    enum BoxEditorType : String {
+        case createNewBox = "New Box"
+        case editBox = "Edit Box"
     }
 }
 
 struct BoxEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        BoxEditorView(name: "",
-                      keywords: "",
-                      description: "",
-                      theme: 0)
+        BoxEditorView(isPresented: .constant(true), editorType: .createNewBox)
     }
 }
+
