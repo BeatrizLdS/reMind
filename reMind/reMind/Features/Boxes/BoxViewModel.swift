@@ -9,13 +9,22 @@ import Foundation
 
 class BoxViewModel: ObservableObject {
     @Published var boxes: [Box] = []
+    @Published var numberOfTerms: [Int] = []
 
     init() {
-        self.boxes = Box.all()
+        fetchBoxes()
+    }
+    
+    func getCountTermsIn(_ box: Box) -> Int {
+        if let index = boxes.firstIndex(of: box) {
+            return numberOfTerms[index]
+        }
+        return 0 
     }
     
     func fetchBoxes() {
         self.boxes = Box.all()
+        self.numberOfTerms = self.boxes.map { $0.terms?.count ?? 0 }
     }
 
     func getNumberOfPendingTerms(of box: Box) -> String {

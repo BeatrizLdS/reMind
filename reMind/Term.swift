@@ -40,13 +40,13 @@ extension Term: CoreDataModel {
     }
 }
 
-enum SpacedRepetitionSystem: Int {
+enum SpacedRepetitionSystem: Int, CaseIterable {
     case none = 0
     case first = 1
     case second = 2
     case third = 3
     case fourth = 5
-    case fifth = 8
-    case sixth = 13
-    case seventh = 21
+    case fifth = 7
+    case sixth = 14
+    case seventh = 30
 }

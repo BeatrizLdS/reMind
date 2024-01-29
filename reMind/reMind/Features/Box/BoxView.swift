@@ -8,35 +8,22 @@
 import SwiftUI
 
 struct BoxView: View {
-    var box: Box
-
-    @State private var searchText: String = ""
-
-    private var filteredTerms: [Term] {
-        let termsSet = box.terms as? Set<Term> ?? []
-        let terms = Array(termsSet).sorted { lhs, rhs in
-            (lhs.value ?? "") < (rhs.value ?? "")
-        }
-        
-        if searchText.isEmpty {
-            return terms
-        } else {
-            return terms.filter { ($0.value ?? "").contains(searchText) }
-        }
-    }
+    @ObservedObject var viewModel: BoxModel
+    
+    @State private var isCreatingTerm: Bool = false
     
     var body: some View {
         List {
-                TodaysCardsView(numberOfPendingCards: 0,
+            TodaysCardsView(numberOfPendingCards: viewModel.getNumberOfPendingTerms(),
                                 theme: .mauve)
             Section {
-                ForEach(filteredTerms, id: \.self) { term in
+                ForEach(viewModel.filteredTerms, id: \.self) { term in
                     Text(term.value ?? "Unknown")
                         .padding(.vertical, 8)
                         .fontWeight(.bold)
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
-                                print("delete")
+                                viewModel.deleteTerm(term: term)
                             } label: {
                                 Image(systemName: "trash")
                             }
@@ -56,8 +43,8 @@ struct BoxView: View {
         }
         .scrollContentBackground(.hidden)
         .background(reBackground())
-        .navigationTitle(box.name ?? "Unknown")
-        .searchable(text: $searchText, prompt: "")
+        .navigationTitle(viewModel.box.name ?? "Unknown")
+        .searchable(text: $viewModel.searchText, prompt: "")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {
@@ -67,12 +54,17 @@ struct BoxView: View {
                 }
 
                 Button {
-                    print("add")
+                    isCreatingTerm.toggle()
                 } label: {
                     Image(systemName: "plus")
                 }
-
             }
+        }
+        .sheet(isPresented: $isCreatingTerm) {
+            TermEditorView(box: $viewModel.box, isPresented: $isCreatingTerm)
+                .onDisappear {
+                    viewModel.updateFilteredTerms()
+                }
         }
     }
 }
@@ -104,7 +96,7 @@ struct BoxView_Previews: PreviewProvider {
 
     static var previews: some View {
         NavigationStack {
-            BoxView(box: BoxView_Previews.box)
+            BoxView(viewModel: .init(box: Box()))
         }
     }
 }
