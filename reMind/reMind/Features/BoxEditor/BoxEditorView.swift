@@ -62,8 +62,9 @@ struct BoxEditorView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        let wasCreated = viewModel.createNewBox()
-                        isPresented = false
+                        if viewModel.createNewBox() {
+                            isPresented = false
+                        }
                     }
                     .fontWeight(.bold)
                 }

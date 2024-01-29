@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BoxesView: View {
+    
     private let columns: [GridItem] = [
         GridItem(.adaptive(minimum: 140), spacing: 20),
         GridItem(.adaptive(minimum: 140), spacing: 20)
@@ -21,16 +22,19 @@ struct BoxesView: View {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(viewModel.boxes) { box in
                     NavigationLink {
-                        BoxView(box: box)
+                        BoxView(viewModel: BoxModel(box: box))
                     } label: {
                         BoxCardView(boxName: box.name ?? "Unkown",
-                                    numberOfTerms: box.numberOfTerms,
+                                    numberOfTerms: viewModel.getCountTermsIn(box),
                                     theme: box.theme)
                         .reBadge(viewModel.getNumberOfPendingTerms(of: box))
                     }
                 }
             }
             .padding(40)
+        }
+        .onAppear {
+            viewModel.fetchBoxes()
         }
         .padding(-20)
         .navigationTitle("Boxes")
