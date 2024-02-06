@@ -27,15 +27,9 @@ class TermEditorModel: ObservableObject {
         newTerm.value = term
         newTerm.creationDate = Date()
         newTerm.lastReview = Date()
-        
-        if let srs = SpacedRepetitionSystem.allCases.randomElement(),
-           let theme = reTheme.allCases.randomElement() {
-            newTerm.rawSRS = Int16(srs.rawValue)
-            newTerm.rawTheme = Int16(theme.rawValue)
-        } else {
-            newTerm.rawSRS = Int16(SpacedRepetitionSystem.fourth.rawValue)
-            newTerm.rawTheme = Int16(reTheme.lavender.rawValue)
-        }
+        newTerm.rawSRS = Int16(SpacedRepetitionSystem.first.rawValue)
+        let theme = reTheme.allCases.randomElement() ?? reTheme.lavender
+        newTerm.rawTheme = Int16(theme.rawValue)
         
         box.addToTerms(newTerm)
         
