@@ -17,6 +17,8 @@ struct TermEditorView: View {
     @FocusState var focusField: FocusedField?
     @Binding var isPresented: Bool
     @ObservedObject var viewModel: TermEditorModel = TermEditorModel()
+        
+    @State var isShowingIcon: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -40,10 +42,19 @@ struct TermEditorView: View {
                 VStack {
                     Spacer()
                     Button(action: {
-                        createTerm()
+                        withAnimation {
+                            createTermAndClear()
+                        }
                     }, label: {
-                        Text("Save and Add New")
-                            .frame(maxWidth: .infinity)
+                        if !isShowingIcon {
+                            Text("Save and Add New")
+                                .frame(maxWidth: .infinity)
+                                .transition(.opacity.animation(.easeInOut))
+                        } else {
+                            Image(systemName: "checkmark.rectangle.fill")
+                                .frame(maxWidth: .infinity)
+                                .transition(.opacity.animation(.easeInOut))
+                        }
                     })
                     .buttonStyle(reButtonStyle())
                 }
@@ -70,7 +81,7 @@ struct TermEditorView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        createTerm()
+                        createTermAndClose()
                     }
                     .fontWeight(.bold)
                 }
@@ -78,10 +89,22 @@ struct TermEditorView: View {
         }
     }
     
-    func createTerm() {
+    func createTermAndClose() {
         if viewModel.createNewTerm(box: box) {
             UIApplication.shared.endEditing()
             isPresented.toggle()
+        }
+    }
+    
+    func createTermAndClear() {
+        if viewModel.createNewTerm(box: box) {
+            isShowingIcon.toggle()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                isShowingIcon.toggle()
+                viewModel.clearAllFields()
+                focusField = .term
+            }
         }
     }
 }
