@@ -33,6 +33,11 @@ class TermEditorModel: ObservableObject {
         
         box.addToTerms(newTerm)
         
+        let saveStatus = saveContext()
+        return saveStatus
+    }
+    
+    private func saveContext() -> Bool {
         let saveSuccessful = CoreDataStack.shared.saveContext()
         if !saveSuccessful {
             alertError.showAlert = true
@@ -50,5 +55,10 @@ class TermEditorModel: ObservableObject {
             return false
         }
         return true
+    }
+    
+    func clearAllFields() {
+        term = ""
+        meaning = ""
     }
 }
