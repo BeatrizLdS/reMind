@@ -81,7 +81,7 @@ struct BoxesView_Previews: PreviewProvider {
         box3.name = "Box 3"
         box3.rawTheme = 2
 
-        return BoxViewModel()
+        return BoxViewModel(repositoryImplementation: BoxRepository())
     }()
     
     static var previews: some View {
