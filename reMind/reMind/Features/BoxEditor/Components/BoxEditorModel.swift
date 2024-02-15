@@ -11,6 +11,8 @@ class BoxEditorModel: ObservableObject {
     enum FocusedField: Hashable {
         case name, keywords, description
     }
+    
+    private let createBoxRepository: CreateBoxRepository
         
     @Published var name: String = ""
     @Published var keywords: String = ""
@@ -21,6 +23,10 @@ class BoxEditorModel: ObservableObject {
     
     @Published var alertError = AlertError()
     
+    init(repositoryImplementation: CreateBoxRepository) {
+        self.createBoxRepository = repositoryImplementation
+    }
+    
     func createNewBox() -> Bool {
         let isValid = fieldsAreFilled()
         if !isValid {
@@ -29,19 +35,13 @@ class BoxEditorModel: ObservableObject {
             return false
         }
         
-        let newBox = Box.newObject()
-        newBox.identifier = UUID()
-        newBox.name = name
-        newBox.descriptions = description
-        newBox.keywords = keywords
-        newBox.rawTheme = Int16(theme)
+        let newBox = createBoxRepository.createNewBox(
+            name: name,
+            keywords: keywords,
+            description: description,
+            theme: reTheme(rawValue: theme)!
+        )
         
-        let saveSuccessful = CoreDataStack.shared.saveContext()
-        if !saveSuccessful {
-            alertError.showAlert = true
-            alertError.errorMessage = "Could not save the new box. Please try again; if the issue persists, report the problem."
-            return false
-        }
         return true
     }
     

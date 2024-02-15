@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BoxEditorView: View {    
-    @ObservedObject var viewModel: BoxEditorModel = BoxEditorModel()
+    @ObservedObject var viewModel: BoxEditorModel = BoxEditorModel(repositoryImplementation: BoxRepository())
     @Binding var isPresented: Bool
     
     @FocusState var focusField: BoxEditorModel.FocusedField?
