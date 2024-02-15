@@ -11,6 +11,7 @@ struct BoxView: View {
     @ObservedObject var viewModel: BoxModel
     
     @State private var isCreatingTerm: Bool = false
+    @State private var isEditingBox: Bool = false
     
     var body: some View {
         List {
@@ -43,12 +44,12 @@ struct BoxView: View {
         }
         .scrollContentBackground(.hidden)
         .background(reBackground())
-        .navigationTitle(viewModel.box.name ?? "Unknown")
+        .navigationTitle(viewModel.title)
         .searchable(text: $viewModel.searchText, prompt: "")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {
-                    print("edit")
+                    isEditingBox.toggle()
                 } label: {
                     Image(systemName: "square.and.pencil")
                 }
@@ -65,6 +66,16 @@ struct BoxView: View {
                 .onDisappear {
                     viewModel.updateFilteredTerms()
                 }
+        }
+        .sheet(isPresented: $isEditingBox) {
+            BoxEditorView(
+                isPresented: $isEditingBox,
+                editorType: .editBox,
+                box: viewModel.box
+            )
+            .onDisappear {
+                viewModel.updateTitle()
+            }
         }
     }
 }
