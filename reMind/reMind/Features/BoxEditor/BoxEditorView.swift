@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct BoxEditorView: View {    
-    @ObservedObject var viewModel: BoxEditorModel = BoxEditorModel(repositoryImplementation: BoxRepository())
+    @ObservedObject var viewModel: BoxEditorModel
     @Binding var isPresented: Bool
     
     @FocusState var focusField: BoxEditorModel.FocusedField?
     let editorType: BoxEditorType
+    
+    init(isPresented: Binding<Bool>, editorType: BoxEditorType, box: Box? = nil) {
+        self._isPresented = isPresented
+        self.editorType = editorType
+        
+        if let currentBox = box {
+            self.viewModel = BoxEditorModel(
+                creationRepositoryImplementation: BoxRepository(),
+                editionRepositoryImplementation: BoxRepository(),
+                box: currentBox)
+        } else {
+            self.viewModel = BoxEditorModel(
+                creationRepositoryImplementation: BoxRepository(),
+                editionRepositoryImplementation: BoxRepository())
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -48,7 +64,7 @@ struct BoxEditorView: View {
                 Alert(title: Text("Error!"), message: Text(viewModel.alertError.errorMessage))
             }
             .onAppear {
-                focusField = .name
+                focusField = editorType == .createNewBox ? .name : nil
             }
             .background(reBackground())
             .navigationTitle(editorType.rawValue)
@@ -62,7 +78,7 @@ struct BoxEditorView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        if viewModel.createNewBox() {
+                        if viewModel.save() {
                             isPresented = false
                         }
                     }

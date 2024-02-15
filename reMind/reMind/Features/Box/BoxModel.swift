@@ -11,10 +11,16 @@ class BoxModel: ObservableObject {
     @Published var box: Box
     @Published var searchText: String = ""
     @Published var filteredTerms: [Term] = []
+    @Published var title: String
         
     init(box: Box) {
         self.box = box
+        self.title = box.name ?? "Unknown"
         updateFilteredTerms()
+    }
+    
+    func updateTitle() {
+        title = box.name ?? "Unknown"
     }
     
     func updateFilteredTerms() {

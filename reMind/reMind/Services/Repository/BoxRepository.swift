@@ -28,3 +28,16 @@ extension BoxRepository: CreateBoxRepository {
         return newBox
     }
 }
+
+
+// MARK: EditBoxRepository Implementation
+extension BoxRepository: EditBoxRepository {
+    func editBox(box: Box, name: String, keywords: String, description: String, theme: Int) -> Box {
+        box.name = name
+        box.keywords = keywords
+        box.descriptions = description
+        box.rawTheme = Int16(theme)
+        
+        return box
+    }
+}
