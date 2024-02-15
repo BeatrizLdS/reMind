@@ -13,6 +13,12 @@ class TermEditorModel: ObservableObject {
     
     @Published var alertError = AlertError()
     
+    private let createTermRepository: CreateTermRepository
+    
+    init(termRepositoryImplentation: CreateTermRepository) {
+        self.createTermRepository = termRepositoryImplentation
+    }
+    
     func createNewTerm(box: Box) -> Bool {
         let isValid = fieldsAreFilled()
         if !isValid {
@@ -21,29 +27,12 @@ class TermEditorModel: ObservableObject {
             return false
         }
         
-        let newTerm = Term.newObject()
-        newTerm.identifier = UUID()
-        newTerm.meaning = meaning
-        newTerm.value = term
-        newTerm.creationDate = Date()
-        newTerm.lastReview = Date()
-        newTerm.rawSRS = Int16(SpacedRepetitionSystem.first.rawValue)
-        let theme = reTheme.allCases.randomElement() ?? reTheme.lavender
-        newTerm.rawTheme = Int16(theme.rawValue)
+        let newTerm = createTermRepository.createNewTermTo(
+            box: box,
+            title: term,
+            meaning: meaning,
+            theme: reTheme.allCases.randomElement() ?? reTheme.lavender)
         
-        box.addToTerms(newTerm)
-        
-        let saveStatus = saveContext()
-        return saveStatus
-    }
-    
-    private func saveContext() -> Bool {
-        let saveSuccessful = CoreDataStack.shared.saveContext()
-        if !saveSuccessful {
-            alertError.showAlert = true
-            alertError.errorMessage = "Could not save the new box. Please try again; if the issue persists, report the problem."
-            return false
-        }
         return true
     }
     

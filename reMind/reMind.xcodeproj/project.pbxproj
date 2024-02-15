@@ -39,10 +39,14 @@
 		FEE2DC752A4B6172006A535D /* reBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DC742A4B6172006A535D /* reBackground.swift */; };
 		FEE2DC782A4B70FA006A535D /* BoxCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE2DC772A4B70FA006A535D /* BoxCardView.swift */; };
 		FEEFCBBD2A65DAA400A61FE9 /* BoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEFCBBC2A65DAA400A61FE9 /* BoxViewModel.swift */; };
+		FF43CFF02B753C93007DB267 /* BoxRepositoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF43CFEF2B753C93007DB267 /* BoxRepositoryProtocols.swift */; };
+		FF43CFF22B753E96007DB267 /* TermRepositoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF43CFF12B753E96007DB267 /* TermRepositoryProtocols.swift */; };
+		FF43CFF42B753F44007DB267 /* BoxRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF43CFF32B753F44007DB267 /* BoxRepository.swift */; };
 		FF4982772B66DBE100134BE5 /* BoxEditorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4982762B66DBE100134BE5 /* BoxEditorModel.swift */; };
 		FF4982792B66DC5400134BE5 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4982782B66DC5400134BE5 /* UIApplication.swift */; };
 		FF95C1522B670F0C007AF872 /* TermEditorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF95C1512B670F0B007AF872 /* TermEditorModel.swift */; };
 		FF95C1542B673BF2007AF872 /* BoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF95C1532B673BF2007AF872 /* BoxModel.swift */; };
+		FFDE983B2B7E773800E7F5DF /* TermRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDE983A2B7E773800E7F5DF /* TermRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,10 +83,14 @@
 		FEE2DC742A4B6172006A535D /* reBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reBackground.swift; sourceTree = "<group>"; };
 		FEE2DC772A4B70FA006A535D /* BoxCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxCardView.swift; sourceTree = "<group>"; };
 		FEEFCBBC2A65DAA400A61FE9 /* BoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxViewModel.swift; sourceTree = "<group>"; };
+		FF43CFEF2B753C93007DB267 /* BoxRepositoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxRepositoryProtocols.swift; sourceTree = "<group>"; };
+		FF43CFF12B753E96007DB267 /* TermRepositoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermRepositoryProtocols.swift; sourceTree = "<group>"; };
+		FF43CFF32B753F44007DB267 /* BoxRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxRepository.swift; sourceTree = "<group>"; };
 		FF4982762B66DBE100134BE5 /* BoxEditorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoxEditorModel.swift; path = Components/BoxEditorModel.swift; sourceTree = "<group>"; };
 		FF4982782B66DC5400134BE5 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		FF95C1512B670F0B007AF872 /* TermEditorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermEditorModel.swift; sourceTree = "<group>"; };
 		FF95C1532B673BF2007AF872 /* BoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxModel.swift; sourceTree = "<group>"; };
+		FFDE983A2B7E773800E7F5DF /* TermRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +299,7 @@
 		FE6A9FB02A46202500A84FC9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				FF43CFED2B7536C6007DB267 /* Repository */,
 				FE6F11AB2A605950003511F3 /* CoreData */,
 			);
 			path = Services;
@@ -329,6 +338,25 @@
 				FEE2DC772A4B70FA006A535D /* BoxCardView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		FF43CFED2B7536C6007DB267 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				FF43CFF32B753F44007DB267 /* BoxRepository.swift */,
+				FFDE983A2B7E773800E7F5DF /* TermRepository.swift */,
+				FF43CFEE2B7536CE007DB267 /* Protocols */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		FF43CFEE2B7536CE007DB267 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				FF43CFEF2B753C93007DB267 /* BoxRepositoryProtocols.swift */,
+				FF43CFF12B753E96007DB267 /* TermRepositoryProtocols.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,6 +434,7 @@
 				FEDE8E052A4DFADE00EEF7EA /* reTextField.swift in Sources */,
 				FE3ABEE92A53563F00432ED4 /* SwipperLabel.swift in Sources */,
 				FEE2DC752A4B6172006A535D /* reBackground.swift in Sources */,
+				FF43CFF22B753E96007DB267 /* TermRepositoryProtocols.swift in Sources */,
 				FEA517AA2A548FBC0004D9D1 /* SwipeReview.swift in Sources */,
 				FEA517AE2A54963E0004D9D1 /* SwipperCard.swift in Sources */,
 				FE1640962AC2126E0073317C /* Box.swift in Sources */,
@@ -413,7 +442,9 @@
 				FE1640992AC2126E0073317C /* Term.swift in Sources */,
 				FE3ABECD2A4F5E8F00432ED4 /* reRadioButtonGroup.swift in Sources */,
 				FEE2DC732A4B5CE4006A535D /* Palette.swift in Sources */,
+				FF43CFF42B753F44007DB267 /* BoxRepository.swift in Sources */,
 				FF95C1522B670F0C007AF872 /* TermEditorModel.swift in Sources */,
+				FF43CFF02B753C93007DB267 /* BoxRepositoryProtocols.swift in Sources */,
 				FE3ABEDA2A532A4D00432ED4 /* reColorButtonStyle.swift in Sources */,
 				FE3ABED22A4F680C00432ED4 /* reButtonStyle.swift in Sources */,
 				FE5B807A2A4CB0DA00711F80 /* reBadge.swift in Sources */,
@@ -425,6 +456,7 @@
 				FE3ABED82A5328FD00432ED4 /* TodaysCardsView.swift in Sources */,
 				FE6F11AF2A605A21003511F3 /* CoreDataModel.swift in Sources */,
 				FEDE8E072A4DFEBD00EEF7EA /* reTexFieldStyle.swift in Sources */,
+				FFDE983B2B7E773800E7F5DF /* TermRepository.swift in Sources */,
 				FE3ABEDF2A53522A00432ED4 /* SwipperView.swift in Sources */,
 				FE6F11B12A605A4C003511F3 /* NSObject.swift in Sources */,
 				FE6F11AD2A6059FD003511F3 /* CoreDataStack.swift in Sources */,

@@ -11,7 +11,7 @@ class BoxModel: ObservableObject {
     @Published var box: Box
     @Published var searchText: String = ""
     @Published var filteredTerms: [Term] = []
-    
+        
     init(box: Box) {
         self.box = box
         updateFilteredTerms()
@@ -20,7 +20,7 @@ class BoxModel: ObservableObject {
     func updateFilteredTerms() {
         let termsSet = box.terms as? Set<Term> ?? []
         let terms = Array(termsSet).sorted { lhs, rhs in
-            (lhs.value ?? "") < (rhs.value ?? "")
+            (lhs.creationDate!) > (rhs.creationDate!)
         }
         
         if searchText.isEmpty {
@@ -47,6 +47,5 @@ class BoxModel: ObservableObject {
     
     func deleteTerm(term: Term) {
         term.destroy()
-        let _ = CoreDataStack.shared.saveContext()
     }
 }

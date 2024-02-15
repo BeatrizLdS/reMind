@@ -16,7 +16,7 @@ struct TermEditorView: View {
     
     @FocusState var focusField: FocusedField?
     @Binding var isPresented: Bool
-    @ObservedObject var viewModel: TermEditorModel = TermEditorModel()
+    @ObservedObject var viewModel: TermEditorModel = TermEditorModel(termRepositoryImplentation: TermRepository())
         
     @State var isShowingIcon: Bool = false
     

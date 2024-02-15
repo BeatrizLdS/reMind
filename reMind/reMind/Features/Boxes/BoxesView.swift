@@ -17,12 +17,17 @@ struct BoxesView: View {
     @ObservedObject var viewModel: BoxViewModel
     @State private var isCreatingNewBox: Bool = false
     
+    @State private var refreshID = UUID()
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(viewModel.boxes) { box in
                     NavigationLink {
                         BoxView(viewModel: BoxModel(box: box))
+                            .onDisappear {
+                                self.refreshID = UUID()
+                            }
                     } label: {
                         BoxCardView(boxName: box.name ?? "Unkown",
                                     numberOfTerms: viewModel.getCountTermsIn(box),
@@ -32,6 +37,7 @@ struct BoxesView: View {
                 }
             }
             .padding(40)
+            .id(refreshID)
         }
         .onAppear {
             viewModel.fetchBoxes()
@@ -81,7 +87,7 @@ struct BoxesView_Previews: PreviewProvider {
         box3.name = "Box 3"
         box3.rawTheme = 2
 
-        return BoxViewModel()
+        return BoxViewModel(repositoryImplementation: BoxRepository())
     }()
     
     static var previews: some View {

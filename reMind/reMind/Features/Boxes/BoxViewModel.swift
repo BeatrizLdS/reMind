@@ -10,8 +10,11 @@ import Foundation
 class BoxViewModel: ObservableObject {
     @Published var boxes: [Box] = []
     @Published var numberOfTerms: [Int] = []
+    
+    private let boxesRepository: FetchBoxRepository
 
-    init() {
+    init(repositoryImplementation: FetchBoxRepository) {
+        boxesRepository = repositoryImplementation
         fetchBoxes()
     }
     
@@ -23,7 +26,7 @@ class BoxViewModel: ObservableObject {
     }
     
     func fetchBoxes() {
-        self.boxes = Box.all()
+        self.boxes = boxesRepository.fetchAll()
         self.numberOfTerms = self.boxes.map { $0.terms?.count ?? 0 }
     }
 
