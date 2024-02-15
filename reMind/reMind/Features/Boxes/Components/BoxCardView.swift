@@ -23,6 +23,7 @@ struct BoxCardView: View {
             Text(boxName)
                 .font(.title3)
                 .fontWeight(.bold)
+                .lineLimit(2)
             
             Label("\(numberOfTerms) terms", systemImage: "doc.plaintext.fill")
                 .padding(8)
@@ -39,7 +40,7 @@ struct BoxCardView: View {
 
 struct BoxCardView_Previews: PreviewProvider {
     static var previews: some View {
-        BoxCardView(boxName: "Math",
+        BoxCardView(boxName: "Math and another numbers56789012345678901234567890",
                     numberOfTerms: 35,
                     theme: .mauve)
     }
