@@ -47,6 +47,7 @@
 		FF95C1522B670F0C007AF872 /* TermEditorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF95C1512B670F0B007AF872 /* TermEditorModel.swift */; };
 		FF95C1542B673BF2007AF872 /* BoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF95C1532B673BF2007AF872 /* BoxModel.swift */; };
 		FFDE983B2B7E773800E7F5DF /* TermRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDE983A2B7E773800E7F5DF /* TermRepository.swift */; };
+		FFDE983D2B7EF1FD00E7F5DF /* SwipperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDE983C2B7EF1FD00E7F5DF /* SwipperModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		FF95C1512B670F0B007AF872 /* TermEditorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermEditorModel.swift; sourceTree = "<group>"; };
 		FF95C1532B673BF2007AF872 /* BoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxModel.swift; sourceTree = "<group>"; };
 		FFDE983A2B7E773800E7F5DF /* TermRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermRepository.swift; sourceTree = "<group>"; };
+		FFDE983C2B7EF1FD00E7F5DF /* SwipperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipperModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			children = (
 				FE3ABEE72A53562400432ED4 /* Components */,
 				FE3ABEDE2A53522A00432ED4 /* SwipperView.swift */,
+				FFDE983C2B7EF1FD00E7F5DF /* SwipperModel.swift */,
 			);
 			path = Swipper;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				FEDE8E072A4DFEBD00EEF7EA /* reTexFieldStyle.swift in Sources */,
 				FFDE983B2B7E773800E7F5DF /* TermRepository.swift in Sources */,
 				FE3ABEDF2A53522A00432ED4 /* SwipperView.swift in Sources */,
+				FFDE983D2B7EF1FD00E7F5DF /* SwipperModel.swift in Sources */,
 				FE6F11B12A605A4C003511F3 /* NSObject.swift in Sources */,
 				FE6F11AD2A6059FD003511F3 /* CoreDataStack.swift in Sources */,
 				FF95C1542B673BF2007AF872 /* BoxModel.swift in Sources */,

@@ -11,11 +11,17 @@ struct BoxView: View {
     @ObservedObject var viewModel: BoxModel
     
     @State private var isCreatingTerm: Bool = false
+    @State private var isEditingTerm: Bool = false
+    @State private var isEditingBox: Bool = false
+    @State private var isInReview: Bool = false
+    @State private var numberOfPendingTerms: Int = 0
     
     var body: some View {
         List {
-            TodaysCardsView(numberOfPendingCards: viewModel.getNumberOfPendingTerms(),
-                                theme: .mauve)
+            TodaysCardsView(
+                numberOfPendingCards: $numberOfPendingTerms,
+                theme: .mauve,
+                showSwipperView: $isInReview)
             Section {
                 ForEach(viewModel.filteredTerms, id: \.self) { term in
                     Text(term.value ?? "Unknown")
@@ -27,7 +33,15 @@ struct BoxView: View {
                             } label: {
                                 Image(systemName: "trash")
                             }
-
+                            
+                        }
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                isEditingTerm.toggle()
+                                viewModel.currentTerm = term
+                            } label: {
+                                Image(systemName: "square.and.pencil")
+                            }
                         }
                 }
             } header: {
@@ -41,14 +55,17 @@ struct BoxView: View {
             }
 
         }
+        .onAppear {
+            numberOfPendingTerms = viewModel.getNumberOfPendingTerms()
+        }
         .scrollContentBackground(.hidden)
         .background(reBackground())
-        .navigationTitle(viewModel.box.name ?? "Unknown")
+        .navigationTitle(viewModel.title)
         .searchable(text: $viewModel.searchText, prompt: "")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {
-                    print("edit")
+                    isEditingBox.toggle()
                 } label: {
                     Image(systemName: "square.and.pencil")
                 }
@@ -65,6 +82,31 @@ struct BoxView: View {
                 .onDisappear {
                     viewModel.updateFilteredTerms()
                 }
+        }
+        .sheet(isPresented: $isEditingTerm) {
+            TermEditorView(box: $viewModel.box, isPresented: $isEditingTerm, editorType: .editTerm, term: viewModel.currentTerm)
+                .onDisappear {
+                    viewModel.updateFilteredTerms()
+                }
+        }
+        .sheet(isPresented: $isEditingBox) {
+            BoxEditorView(
+                isPresented: $isEditingBox,
+                editorType: .editBox,
+                box: viewModel.box
+            )
+            .onDisappear {
+                viewModel.updateTitle()
+            }
+        }
+        .sheet(isPresented: $isInReview) {
+            SwipperView(
+                viewModel: SwipperModel(terms: viewModel.getAllTerms()),
+                isPresenting: $isInReview
+            )
+            .onDisappear {
+                numberOfPendingTerms = viewModel.getNumberOfPendingTerms()
+            }
         }
     }
 }
@@ -96,7 +138,7 @@ struct BoxView_Previews: PreviewProvider {
 
     static var previews: some View {
         NavigationStack {
-            BoxView(viewModel: .init(box: Box()))
+            BoxView(viewModel: .init(box: Box(), repositoryImplementation: TermRepository()))
         }
     }
 }

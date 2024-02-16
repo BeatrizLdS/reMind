@@ -12,7 +12,8 @@ class BoxEditorModel: ObservableObject {
         case name, keywords, description
     }
     
-    private let createBoxRepository: CreateBoxRepository
+    private let boxRepository: CreateEditBoxRepository
+//    private let boxRepository: EditBoxRepository
         
     @Published var name: String = ""
     @Published var keywords: String = ""
@@ -23,11 +24,26 @@ class BoxEditorModel: ObservableObject {
     
     @Published var alertError = AlertError()
     
-    init(repositoryImplementation: CreateBoxRepository) {
-        self.createBoxRepository = repositoryImplementation
+    init(repositoryImplementation: CreateEditBoxRepository, box: Box? = nil) {
+        self.boxRepository = repositoryImplementation
+        
+        if let currentBox = box {
+            self.box = currentBox
+            name = currentBox.name!
+            keywords = currentBox.keywords!
+            description = currentBox.descriptions!
+            theme = Int(currentBox.rawTheme)
+        }
     }
     
-    func createNewBox() -> Bool {
+    func save() -> Bool {
+        if box == nil {
+            return createNewBox()
+        }
+        return editCurrentBox()
+    }
+
+    private func createNewBox() -> Bool {
         let isValid = fieldsAreFilled()
         if !isValid {
             alertError.showAlert = true
@@ -35,12 +51,30 @@ class BoxEditorModel: ObservableObject {
             return false
         }
         
-        let newBox = createBoxRepository.createNewBox(
+        let newBox = boxRepository.createNewBox(
             name: name,
             keywords: keywords,
             description: description,
             theme: reTheme(rawValue: theme)!
         )
+        
+        return true
+    }
+    
+    private func editCurrentBox() -> Bool {
+        let isValid = fieldsAreFilled()
+        if !isValid {
+            alertError.showAlert = true
+            alertError.errorMessage = "Fill in all the fields."
+            return false
+        }
+                
+        box = boxRepository.editBox(
+            box: box!,
+            name: name,
+            keywords: keywords,
+            description: description,
+            theme: theme)
         
         return true
     }

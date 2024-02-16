@@ -15,3 +15,8 @@ protocol CreateBoxRepository {
     func createNewBox(name: String, keywords: String, description: String, theme: reTheme) -> Box
 }
 
+protocol EditBoxRepository {
+    func editBox(box: Box, name: String, keywords: String, description: String, theme: Int) -> Box
+}
+
+protocol CreateEditBoxRepository: CreateBoxRepository, EditBoxRepository {}

@@ -16,9 +16,17 @@ struct TermEditorView: View {
     
     @FocusState var focusField: FocusedField?
     @Binding var isPresented: Bool
-    @ObservedObject var viewModel: TermEditorModel = TermEditorModel(termRepositoryImplentation: TermRepository())
+    @ObservedObject var viewModel: TermEditorModel
         
     @State var isShowingIcon: Bool = false
+    let editorType: TermEditorType
+    
+    init(box: Binding<Box>, isPresented: Binding<Bool>, editorType: TermEditorType = .createNewTerm, term: Term? = nil) {
+        self.viewModel = TermEditorModel(termRepositoryImplentation: TermRepository(), term: term)
+        self._box = box
+        self._isPresented = isPresented
+        self.editorType = editorType
+    }
     
     var body: some View {
         NavigationStack {
@@ -39,24 +47,26 @@ struct TermEditorView: View {
                     .padding(.bottom, 60)
                 }
                 
-                VStack {
-                    Spacer()
-                    Button(action: {
-                        withAnimation {
-                            createTermAndClear()
-                        }
-                    }, label: {
-                        if !isShowingIcon {
-                            Text("Save and Add New")
-                                .frame(maxWidth: .infinity)
-                                .transition(.opacity.animation(.easeInOut))
-                        } else {
-                            Image(systemName: "checkmark.rectangle.fill")
-                                .frame(maxWidth: .infinity)
-                                .transition(.opacity.animation(.easeInOut))
-                        }
-                    })
-                    .buttonStyle(reButtonStyle())
+                if editorType == .createNewTerm {
+                    VStack {
+                        Spacer()
+                        Button(action: {
+                            withAnimation {
+                                createTermAndClear()
+                            }
+                        }, label: {
+                            if !isShowingIcon {
+                                Text("Save and Add New")
+                                    .frame(maxWidth: .infinity)
+                                    .transition(.opacity.animation(.easeInOut))
+                            } else {
+                                Image(systemName: "checkmark.rectangle.fill")
+                                    .frame(maxWidth: .infinity)
+                                    .transition(.opacity.animation(.easeInOut))
+                            }
+                        })
+                        .buttonStyle(reButtonStyle())
+                    }
                 }
             }
             .padding(10)
@@ -70,7 +80,7 @@ struct TermEditorView: View {
             .alert(isPresented: $viewModel.alertError.showAlert) {
                 Alert(title: Text("Error!"), message: Text(viewModel.alertError.errorMessage))
             }
-            .navigationTitle("New Term")
+            .navigationTitle(editorType.rawValue)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -90,14 +100,14 @@ struct TermEditorView: View {
     }
     
     func createTermAndClose() {
-        if viewModel.createNewTerm(box: box) {
+        if viewModel.save(box: box) {
             UIApplication.shared.endEditing()
             isPresented.toggle()
         }
     }
     
     func createTermAndClear() {
-        if viewModel.createNewTerm(box: box) {
+        if viewModel.save(box: box) {
             isShowingIcon.toggle()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -106,6 +116,11 @@ struct TermEditorView: View {
                 focusField = .term
             }
         }
+    }
+    
+    enum TermEditorType : String {
+        case createNewTerm = "New Term"
+        case editTerm = "Edit Term"
     }
 }
 
