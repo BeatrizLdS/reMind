@@ -11,12 +11,16 @@ class BoxModel: ObservableObject {
     @Published var box: Box
     @Published var searchText: String = ""
     @Published var filteredTerms: [Term] = []
-    @Published var title: String
+    @Published var title: String = ""
+    var currentTerm: Term?
+    
+    private let termRepository: DeletableTermRepository
         
-    init(box: Box) {
+    init(box: Box, repositoryImplementation: DeletableTermRepository) {
         self.box = box
-        self.title = box.name ?? "Unknown"
+        termRepository = repositoryImplementation
         updateFilteredTerms()
+        updateTitle()
     }
     
     func updateTitle() {
@@ -52,6 +56,6 @@ class BoxModel: ObservableObject {
     }
     
     func deleteTerm(term: Term) {
-        term.destroy()
+        termRepository.deteteTerm(term: term)
     }
 }

@@ -15,8 +15,8 @@ class BoxRepository: FetchBoxRepository {
 }
 
 
-// MARK: CreateBoxRepository Implementation
-extension BoxRepository: CreateBoxRepository {
+// MARK: CreateBoxRepository and EditBoxRepository Implementation
+extension BoxRepository: CreateEditBoxRepository {
     func createNewBox(name: String, keywords: String, description: String, theme: reTheme) -> Box {
         let newBox = Box.newObject()
         newBox.identifier = UUID()
@@ -27,11 +27,7 @@ extension BoxRepository: CreateBoxRepository {
         
         return newBox
     }
-}
-
-
-// MARK: EditBoxRepository Implementation
-extension BoxRepository: EditBoxRepository {
+    
     func editBox(box: Box, name: String, keywords: String, description: String, theme: Int) -> Box {
         box.name = name
         box.keywords = keywords

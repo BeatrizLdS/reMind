@@ -11,6 +11,7 @@ struct BoxView: View {
     @ObservedObject var viewModel: BoxModel
     
     @State private var isCreatingTerm: Bool = false
+    @State private var isEditingTerm: Bool = false
     @State private var isEditingBox: Bool = false
     
     var body: some View {
@@ -28,7 +29,15 @@ struct BoxView: View {
                             } label: {
                                 Image(systemName: "trash")
                             }
-
+                            
+                        }
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                isEditingTerm.toggle()
+                                viewModel.currentTerm = term
+                            } label: {
+                                Image(systemName: "square.and.pencil")
+                            }
                         }
                 }
             } header: {
@@ -63,6 +72,12 @@ struct BoxView: View {
         }
         .sheet(isPresented: $isCreatingTerm) {
             TermEditorView(box: $viewModel.box, isPresented: $isCreatingTerm)
+                .onDisappear {
+                    viewModel.updateFilteredTerms()
+                }
+        }
+        .sheet(isPresented: $isEditingTerm) {
+            TermEditorView(box: $viewModel.box, isPresented: $isEditingTerm, editorType: .editTerm, term: viewModel.currentTerm)
                 .onDisappear {
                     viewModel.updateFilteredTerms()
                 }
@@ -107,7 +122,7 @@ struct BoxView_Previews: PreviewProvider {
 
     static var previews: some View {
         NavigationStack {
-            BoxView(viewModel: .init(box: Box()))
+            BoxView(viewModel: .init(box: Box(), repositoryImplementation: TermRepository()))
         }
     }
 }

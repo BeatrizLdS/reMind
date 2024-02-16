@@ -11,15 +11,37 @@ class TermEditorModel: ObservableObject {
     @Published var term: String = ""
     @Published var meaning: String = ""
     
+    @Published var currentTerm: Term?
+    
     @Published var alertError = AlertError()
     
-    private let createTermRepository: CreateTermRepository
+    private let termRepository: CreateEditTermRepository
     
-    init(termRepositoryImplentation: CreateTermRepository) {
-        self.createTermRepository = termRepositoryImplentation
+    init(termRepositoryImplentation: CreateEditTermRepository, term: Term? = nil) {
+        self.termRepository = termRepositoryImplentation
+        if let currentTerm = term {
+            self.currentTerm = currentTerm
+            self.term = currentTerm.value!
+            self.meaning = currentTerm.meaning!
+        }
     }
     
-    func createNewTerm(box: Box) -> Bool {
+    func save(box: Box) -> Bool {
+        if currentTerm == nil {
+            return createNewTerm(box: box)
+        }
+        return editCurrentTerm()
+    }
+    
+    private func editCurrentTerm() -> Bool {
+        currentTerm = termRepository.editTerm(
+            term: currentTerm!,
+            title: term,
+            meaning: meaning)
+        return true
+    }
+    
+    private func createNewTerm(box: Box) -> Bool {
         let isValid = fieldsAreFilled()
         if !isValid {
             alertError.showAlert = true
@@ -27,7 +49,7 @@ class TermEditorModel: ObservableObject {
             return false
         }
         
-        let newTerm = createTermRepository.createNewTermTo(
+        let newTerm = termRepository.createNewTermTo(
             box: box,
             title: term,
             meaning: meaning,

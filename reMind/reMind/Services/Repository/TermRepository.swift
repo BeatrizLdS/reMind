@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: CreateTermRepository Implementation
-class TermRepository: CreateTermRepository {
+// MARK: CreateTermRepository and EditBoxRepository Implementation
+class TermRepository: CreateEditTermRepository {
     func createNewTermTo(box: Box, title: String, meaning: String, theme: reTheme) -> Term {
         let newTerm = Term.newObject()
         newTerm.identifier = UUID()
@@ -23,5 +23,19 @@ class TermRepository: CreateTermRepository {
         
         box.addToTerms(newTerm)
         return newTerm
+    }
+    
+    func editTerm(term: Term, title: String, meaning: String) -> Term {
+        term.value = title
+        term.meaning = meaning
+        
+        return term
+    }
+}
+
+// MARK: DeletableTermRespository Implementation
+extension TermRepository: DeletableTermRepository {
+    func deteteTerm(term: Term) {
+        term.destroy()
     }
 }
