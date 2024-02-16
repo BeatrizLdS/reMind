@@ -27,6 +27,7 @@ struct SwipperCard<FrontContent: View, BackContent: View>: View {
     private let duration: CGFloat = 0.18
     private let screenSize = UIScreen.main.bounds.size
     private let axis: (CGFloat, CGFloat, CGFloat) = (0, 1, 0)
+
     
     var body: some View {
         ZStack {
@@ -99,7 +100,7 @@ struct SwipperCard<FrontContent: View, BackContent: View>: View {
     }
     
     private func dragDidEnd(_ gesture: DragGesture.Value) {
-        withAnimation(.linear(duration: duration)) {
+        withAnimation(.linear(duration: duration).delay(0.5)) {
             dragAmout = .zero
             cardAngle = .zero
             direction = .none

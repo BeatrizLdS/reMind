@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct TodaysCardsView: View {
-    @State var numberOfPendingCards: Int
+    @Binding var numberOfPendingCards: Int
     @State var theme: reTheme
+    
+    @Binding var showSwipperView: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -20,7 +22,9 @@ struct TodaysCardsView: View {
                 .font(.title3)
 
             Button(action: {
-                print("swippe time!")
+                if numberOfPendingCards > 0 {
+                    showSwipperView.toggle()
+                }
             }, label: {
                 Text("Start Swipping")
                     .frame(maxWidth: .infinity)
@@ -34,7 +38,7 @@ struct TodaysCardsView: View {
 
 struct TodaysCardsView_Previews: PreviewProvider {
     static var previews: some View {
-        TodaysCardsView(numberOfPendingCards: 10, theme: .mauve)
+        TodaysCardsView(numberOfPendingCards: .constant(10), theme: .mauve, showSwipperView: .constant(false))
             .padding()
     }
 }

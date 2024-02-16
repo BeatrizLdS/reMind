@@ -13,11 +13,15 @@ struct BoxView: View {
     @State private var isCreatingTerm: Bool = false
     @State private var isEditingTerm: Bool = false
     @State private var isEditingBox: Bool = false
+    @State private var isInReview: Bool = false
+    @State private var numberOfPendingTerms: Int = 0
     
     var body: some View {
         List {
-            TodaysCardsView(numberOfPendingCards: viewModel.getNumberOfPendingTerms(),
-                                theme: .mauve)
+            TodaysCardsView(
+                numberOfPendingCards: $numberOfPendingTerms,
+                theme: .mauve,
+                showSwipperView: $isInReview)
             Section {
                 ForEach(viewModel.filteredTerms, id: \.self) { term in
                     Text(term.value ?? "Unknown")
@@ -50,6 +54,9 @@ struct BoxView: View {
                     .padding(.bottom, 16)
             }
 
+        }
+        .onAppear {
+            numberOfPendingTerms = viewModel.getNumberOfPendingTerms()
         }
         .scrollContentBackground(.hidden)
         .background(reBackground())
@@ -90,6 +97,15 @@ struct BoxView: View {
             )
             .onDisappear {
                 viewModel.updateTitle()
+            }
+        }
+        .sheet(isPresented: $isInReview) {
+            SwipperView(
+                viewModel: SwipperModel(terms: viewModel.getAllTerms()),
+                isPresenting: $isInReview
+            )
+            .onDisappear {
+                numberOfPendingTerms = viewModel.getNumberOfPendingTerms()
             }
         }
     }
