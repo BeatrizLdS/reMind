@@ -12,8 +12,8 @@ class BoxEditorModel: ObservableObject {
         case name, keywords, description
     }
     
-    private let createBoxRepository: CreateBoxRepository
-    private let editBoxRepository: EditBoxRepository
+    private let boxRepository: CreateEditBoxRepository
+//    private let boxRepository: EditBoxRepository
         
     @Published var name: String = ""
     @Published var keywords: String = ""
@@ -24,9 +24,8 @@ class BoxEditorModel: ObservableObject {
     
     @Published var alertError = AlertError()
     
-    init(creationRepositoryImplementation: CreateBoxRepository, editionRepositoryImplementation: EditBoxRepository, box: Box? = nil) {
-        self.createBoxRepository = creationRepositoryImplementation
-        self.editBoxRepository = editionRepositoryImplementation
+    init(repositoryImplementation: CreateEditBoxRepository, box: Box? = nil) {
+        self.boxRepository = repositoryImplementation
         
         if let currentBox = box {
             self.box = currentBox
@@ -52,7 +51,7 @@ class BoxEditorModel: ObservableObject {
             return false
         }
         
-        let newBox = createBoxRepository.createNewBox(
+        let newBox = boxRepository.createNewBox(
             name: name,
             keywords: keywords,
             description: description,
@@ -70,7 +69,7 @@ class BoxEditorModel: ObservableObject {
             return false
         }
                 
-        box = editBoxRepository.editBox(
+        box = boxRepository.editBox(
             box: box!,
             name: name,
             keywords: keywords,

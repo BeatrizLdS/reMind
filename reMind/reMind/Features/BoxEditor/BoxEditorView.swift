@@ -20,13 +20,10 @@ struct BoxEditorView: View {
         
         if let currentBox = box {
             self.viewModel = BoxEditorModel(
-                creationRepositoryImplementation: BoxRepository(),
-                editionRepositoryImplementation: BoxRepository(),
+                repositoryImplementation: BoxRepository(),
                 box: currentBox)
         } else {
-            self.viewModel = BoxEditorModel(
-                creationRepositoryImplementation: BoxRepository(),
-                editionRepositoryImplementation: BoxRepository())
+            self.viewModel = BoxEditorModel(repositoryImplementation: BoxRepository())
         }
     }
     
