@@ -16,3 +16,7 @@ protocol EditTermRepository {
 }
 
 protocol CreateEditTermRepository: CreateTermRepository, EditTermRepository {}
+
+protocol DeletableTermRepository {
+    func deteteTerm(term: Term)
+}

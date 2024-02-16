@@ -24,7 +24,7 @@ struct BoxesView: View {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(viewModel.boxes) { box in
                     NavigationLink {
-                        BoxView(viewModel: BoxModel(box: box))
+                        BoxView(viewModel: BoxModel(box: box, repositoryImplementation: TermRepository()))
                             .onDisappear {
                                 self.refreshID = UUID()
                             }

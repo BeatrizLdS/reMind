@@ -69,9 +69,7 @@ class BoxEditorModel: ObservableObject {
             alertError.errorMessage = "Fill in all the fields."
             return false
         }
-        
-        print("Ta na função certa")
-        
+                
         box = editBoxRepository.editBox(
             box: box!,
             name: name,

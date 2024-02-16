@@ -32,3 +32,10 @@ class TermRepository: CreateEditTermRepository {
         return term
     }
 }
+
+// MARK: DeletableTermRespository Implementation
+extension TermRepository: DeletableTermRepository {
+    func deteteTerm(term: Term) {
+        term.destroy()
+    }
+}

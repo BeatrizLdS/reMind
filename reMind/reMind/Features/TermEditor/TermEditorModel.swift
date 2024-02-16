@@ -34,7 +34,6 @@ class TermEditorModel: ObservableObject {
     }
     
     private func editCurrentTerm() -> Bool {
-        print("Função Certa!!")
         currentTerm = termRepository.editTerm(
             term: currentTerm!,
             title: term,

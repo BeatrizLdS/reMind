@@ -122,7 +122,7 @@ struct BoxView_Previews: PreviewProvider {
 
     static var previews: some View {
         NavigationStack {
-            BoxView(viewModel: .init(box: Box()))
+            BoxView(viewModel: .init(box: Box(), repositoryImplementation: TermRepository()))
         }
     }
 }
