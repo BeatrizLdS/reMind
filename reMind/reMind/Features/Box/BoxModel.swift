@@ -55,6 +55,11 @@ class BoxModel: ObservableObject {
         return filteredTerms.count
     }
     
+    func getAllTerms() -> [Term] {
+        let setTerms = box.terms as? Set<Term> ?? []
+        return Array(setTerms)
+    }
+    
     func deleteTerm(term: Term) {
         termRepository.deteteTerm(term: term)
     }
