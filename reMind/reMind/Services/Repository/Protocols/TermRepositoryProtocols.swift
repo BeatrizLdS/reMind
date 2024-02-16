@@ -10,3 +10,9 @@ import Foundation
 protocol CreateTermRepository {
     func createNewTermTo(box: Box, title: String, meaning: String, theme: reTheme) -> Term
 }
+
+protocol EditTermRepository {
+    func editTerm(term: Term, title: String, meaning: String) -> Term
+}
+
+protocol CreateEditTermRepository: CreateTermRepository, EditTermRepository {}
