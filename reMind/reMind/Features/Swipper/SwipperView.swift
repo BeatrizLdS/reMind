@@ -43,7 +43,7 @@ struct SwipperView: View {
                     if direction == .right {
                         viewModel.addToRight()
                     } else if direction == .left {
-                        viewModel.addToRight()
+                        viewModel.addToLeft()
                     }
                 })
                 .padding(.horizontal)

@@ -13,7 +13,6 @@ class BoxEditorModel: ObservableObject {
     }
     
     private let boxRepository: CreateEditBoxRepository
-//    private let boxRepository: EditBoxRepository
         
     @Published var name: String = ""
     @Published var keywords: String = ""

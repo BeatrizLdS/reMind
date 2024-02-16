@@ -12,6 +12,7 @@ struct BoxView: View {
     
     @State private var isCreatingTerm: Bool = false
     @State private var isEditingTerm: Bool = false
+    
     @State private var isEditingBox: Bool = false
     @State private var isInReview: Bool = false
     @State private var numberOfPendingTerms: Int = 0
